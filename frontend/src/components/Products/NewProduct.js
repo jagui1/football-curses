@@ -23,7 +23,7 @@ const NewProduct = props => {
 
   return (
     <section id="new-product">
-      <h2>Add a New Product</h2>
+      <h2>Add a New Curse</h2>
       <form onSubmit={submitProductHandler}>
         <Input
           type="text"
@@ -40,7 +40,7 @@ const NewProduct = props => {
           value={enteredPrice}
           onChange={priceChangeHandler}
         />
-        <Button type="submit">ADD PRODUCT</Button>
+        <Button type="submit">ADD CURSE</Button>
       </form>
     </section>
   );
