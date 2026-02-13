@@ -6,21 +6,21 @@ import ProductList from './components/Products/ProductList';
 import './App.css';
 
 function App() {
-  const [loadedProducts, setLoadedProducts] = useState([]);
+  const [loadedCurses, setLoadedCurses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchCurses = async () => {
       setIsLoading(true);
-      const response = await fetch('http://localhost:5000/products');
+      const response = await fetch('http://localhost:5000/curses');
 
       const responseData = await response.json();
 
-      setLoadedProducts(responseData.products);
+      setLoadedCurses(responseData.products);
       setIsLoading(false);
     };
 
-    fetchProducts();
+    fetchCurses();
   }, []);
 
   const addProductHandler = async (productName, productPrice) => {
@@ -30,7 +30,7 @@ function App() {
         price: +productPrice // "+" to convert string to number
       };
       let hasError = false;
-      const response = await fetch('http://localhost:5000/product', {
+      const response = await fetch('http://localhost:5000/curse', {
         method: 'POST',
         body: JSON.stringify(newProduct),
         headers: {
@@ -48,7 +48,7 @@ function App() {
         throw new Error(responseData.message);
       }
 
-      setLoadedProducts(prevProducts => {
+      setLoadedCurses(prevProducts => {
         return prevProducts.concat({
           ...newProduct,
           id: responseData.product.id
@@ -65,7 +65,7 @@ function App() {
       <main>
         <NewProduct onAddProduct={addProductHandler} />
         {isLoading && <p className="loader">Loading...</p>}
-        {!isLoading && <ProductList items={loadedProducts} />}
+        {!isLoading && <ProductList items={loadedCurses} />}
       </main>
     </React.Fragment>
   );

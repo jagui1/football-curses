@@ -26,11 +26,11 @@ app.get('/', (req, res, next) => {
   res.status(200).json({ Greeting: "Hello Cruel World" });
 });
 
-app.get('/products', (req, res, next) => {
+app.get('/curses', (req, res, next) => {
   res.status(200).json({ products: DUMMY_PRODUCTS });
 });
 
-app.post('/product', (req, res, next) => {
+app.post('/curse', (req, res, next) => {
   const { title, price } = req.body;
 
   if (!title || title.trim().length === 0 || !price || price <= 0) {
