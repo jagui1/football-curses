@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
 import { CurseStoreService } from '../../services/curse-store.service';
 import { CurseCardComponent } from '../curse-card/curse-card.component';
 
@@ -10,8 +11,14 @@ import { CurseCardComponent } from '../curse-card/curse-card.component';
 })
 export class HexBoardComponent {
   protected readonly store = inject(CurseStoreService);
+  protected readonly auth = inject(AuthService);
 
-  protected clearStub(): void {
-    /* Phase 4 — admin password */
+  readonly requestClearAll = output<void>();
+
+  protected onClearAllClick(): void {
+    if (this.auth.adminLockout()) {
+      return;
+    }
+    this.requestClearAll.emit();
   }
 }

@@ -30,6 +30,20 @@ describe('CurseFormComponent', () => {
     expect(cmp.form.get('nflWeek')).toBeTruthy();
   });
 
+  it('should render three intensity radio cards (Phase 3.4 wiggle targets)', async () => {
+    await TestBed.configureTestingModule({
+      imports: [CurseFormComponent],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(CurseFormComponent);
+    fixture.detectChanges();
+    const cards = fixture.nativeElement.querySelectorAll('.intensity-card');
+    expect(cards.length).toBe(3);
+    const radios = fixture.nativeElement.querySelectorAll(
+      'fieldset.intensity input[type="radio"]',
+    );
+    expect(radios.length).toBe(3);
+  });
+
   it('should not call store.add when invalid', async () => {
     await TestBed.configureTestingModule({
       imports: [CurseFormComponent],

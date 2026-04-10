@@ -40,6 +40,11 @@ body {
   cursor: var(--cursor-witch);
 }
 
+body.witch-mode-active {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
 /*
  * Header background particles are created in JS (no Angular encapsulation attrs).
  * These rules must be global — component-scoped CSS does not apply to them.

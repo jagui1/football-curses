@@ -170,7 +170,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **2.6 — `CurseCardComponent`**
+- [x] **2.6 — `CurseCardComponent`**
   - Accept `@Input() curse: CurseRecord`
   - Display: team logo (ESPN CDN from `teamEspnId`), player headshot (ESPN CDN from `playerEspnId`), player name and position, submitter name, reason, intensity label, flavor text, human-readable timestamp
   - Headshot `(error)` handler: replace broken image with the correct position-group fallback emoji per the table in PRD Section 4
@@ -264,7 +264,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **3.4 — Intensity radio button wiggle**
+- [x] **3.4 — Intensity radio button wiggle**
   - Apply the `wiggle` keyframe animation to each intensity option on `:hover` and `:focus-within`
   - **Acceptance criteria:**
     - Hovering over any intensity option triggers a brief wiggle animation
@@ -285,7 +285,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **3.6 — Verdict badge pulse keyframes**
+- [x] **3.6 — Verdict badge pulse keyframes**
   - Define `@keyframes castPulse` (green glow cycle) and `@keyframes rejectedPulse` (red glow cycle) in `styles.css`
   - Apply `castPulse` to Cast ✅ cards and `rejectedPulse` to Rejected ❌ cards when they first appear in the Witch's Verdict Feed (built in Phase 4)
   - **Acceptance criteria:**
@@ -314,7 +314,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **4.1 — Password hashing pre-build script**
+- [x] **4.1 — Password hashing pre-build script**
   - Create `scripts/hash-passwords.mjs`
   - Read `WITCH_PASSWORD` and `ADMIN_PASSWORD` from `process.env`
   - Fail with a descriptive error if either variable is missing
@@ -333,7 +333,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **4.2 — `AuthService`**
+- [x] **4.2 — `AuthService`**
   - Create `src/app/auth/auth.service.ts` provided at root
   - Import `WITCH_HASH` and `ADMIN_HASH` from `password-hashes.ts`
   - Expose signals: `witchModeActive`, `adminModeActive`, `witchLockout`, `adminLockout`, `witchAttempts`, `adminAttempts` — all typed and initialized to `false` or `0`
@@ -348,7 +348,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **4.3 — Witch Mode trigger (triple-click and URL param)**
+- [x] **4.3 — Witch Mode trigger (triple-click and URL param)**
   - In `HeaderComponent`, track clicks on the site title; if 3 clicks occur within 600ms and `witchLockout()` is `false`, emit a `(triggerWitchModal)` output event
   - In `AppComponent`, listen for `(triggerWitchModal)` and open `WitchPasswordModalComponent`
   - On `AppComponent` init, read the `witch` query param; if `'true'` and not locked out, open the modal automatically
@@ -361,7 +361,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **4.4 — `WitchPasswordModalComponent`**
+- [x] **4.4 — `WitchPasswordModalComponent`**
   - Render the modal only when triggered (use `@if` or `*ngIf`, not CSS `display: none`)
   - Template: title *"🧙‍♀️ Identify Yourself, Witch"*, password `<input type="password">`, *"Enter the Circle 🔮"* confirm button, *"Begone"* dismiss button, attempts-remaining counter derived from `AuthService.witchAttempts`
   - On incorrect password: apply `wiggle` CSS class to the input field; show error *"The spirits reject you."*; decrement displayed counter
@@ -378,7 +378,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **4.5 — Verdict controls on `CurseCardComponent`**
+- [x] **4.5 — Verdict controls on `CurseCardComponent`**
   - Inject `AuthService` into `CurseCardComponent`
   - Render three verdict buttons only when `witchModeActive()` is `true`: **✅ Cast It**, **🕯️ Pending**, **❌ Reject**
   - **✅ Cast It**: calls `CurseStoreService.updateVerdict(curse.id, 'cast')`; triggers a ✨ sparkle CSS animation on the card for ~1 second
@@ -394,7 +394,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **4.6 — `WitchVerdictFeedComponent`**
+- [x] **4.6 — `WitchVerdictFeedComponent`**
   - Generate `components/witch-verdict-feed` as a standalone component
   - Add it as a fifth page section in `AppComponent`, below the Hex Board, labeled *"🔮 The Witch Has Spoken"*
   - Derive a `computed` signal of all curses where `verdict !== null`, sorted by `verdictTimestamp` descending
@@ -419,7 +419,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **5.1 — Admin Mode password modal**
+- [x] **5.1 — Admin Mode password modal**
   - Create `AdminPasswordModalComponent` (standalone)
   - Wire it to the "🗑️ Clear All Hexes" button in `HexBoardComponent` — clicking the button opens the modal; no deletion occurs yet
   - Template: title *"💀 This Cannot Be Undone"*, subtitle *"Enter the admin incantation to erase all hexes from existence."*, password `<input type="password">` (placeholder: *"The forbidden word..."*), *"Destroy Everything 🗑️"* button (red/crimson), *"Abort"* button, attempts-remaining counter
@@ -436,7 +436,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **5.2 — Admin confirmation screen and clear execution**
+- [x] **5.2 — Admin confirmation screen and clear execution**
   - After correct Admin password, replace the modal's password step with a final confirmation screen (no close/reopen — swap content within the same modal element)
   - Confirmation screen content: *"☠️ You are about to delete [N] curses. There is no coming back."* (N = live count from signal), *"Yes, Burn It All"* button, *"Wait, No"* button
   - *"Wait, No"* fully dismisses the modal without deleting anything
@@ -451,7 +451,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **5.3 — `CursedArchivesComponent` — week bucket layout**
+- [x] **5.3 — `CursedArchivesComponent` — week bucket layout**
   - Generate `components/cursed-archives` as a standalone component
   - Add it as a fourth page section in `AppComponent`, between the Hex Board and the Witch's Verdict Feed, labeled *"📅 The Cursed Archives"*
   - Group curses from `CurseStoreService` by `nflWeek` using a `computed` signal
@@ -471,7 +471,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **5.4 — `CursedArchivesComponent` — week filter pills**
+- [x] **5.4 — `CursedArchivesComponent` — week filter pills**
   - Above the bucket list, render a horizontal row of week number pills — one pill per week that has at least one curse
   - Highlight the currently active/selected pill
   - Clicking a pill scrolls to and expands the corresponding bucket, and collapses all others
@@ -484,7 +484,7 @@ Each phase produces a fully working, shippable app before the next phase begins.
 
 ---
 
-- [ ] **5.5 — GitHub Actions deployment workflow**
+- [x] **5.5 — GitHub Actions deployment workflow**
   - Update `.github/workflows/deploy.yml` to:
     - Check out code, set up Node 20, run `npm ci`
     - Run `node scripts/hash-passwords.mjs` with `WITCH_PASSWORD` and `ADMIN_PASSWORD` injected from GitHub Actions Secrets

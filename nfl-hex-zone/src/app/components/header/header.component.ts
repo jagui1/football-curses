@@ -3,9 +3,11 @@ import {
   Component,
   ElementRef,
   inject,
+  output,
   viewChild,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { AuthService } from '../../auth/auth.service';
 import { CurseStoreService } from '../../services/curse-store.service';
 
 const FLOAT_EMOJIS = ['🧙‍♀️', '🏈', '💀', '🪄', '🔮', '☠️', '🏟️'];
@@ -18,7 +20,13 @@ const FLOAT_EMOJIS = ['🧙‍♀️', '🏈', '💀', '🪄', '🔮', '☠️',
 })
 export class HeaderComponent implements AfterViewInit {
   protected readonly store = inject(CurseStoreService);
+  protected readonly auth = inject(AuthService);
   private readonly document = inject(DOCUMENT);
+
+  /** Fires when the title is triple-clicked within 600ms (Witch modal). */
+  readonly triggerWitchModal = output<void>();
+
+  private titleClickTimes: number[] = [];
 
   private readonly starHost = viewChild.required<ElementRef<HTMLElement>>('starHost');
   private readonly emojiHost = viewChild.required<ElementRef<HTMLElement>>('emojiHost');
@@ -26,6 +34,24 @@ export class HeaderComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.spawnStars();
     this.spawnFloatingEmojis();
+  }
+
+  protected onTitleClick(): void {
+    const now = Date.now();
+    this.titleClickTimes.push(now);
+    if (this.titleClickTimes.length > 3) {
+      this.titleClickTimes.shift();
+    }
+    if (this.titleClickTimes.length < 3) {
+      return;
+    }
+    const first = this.titleClickTimes[0]!;
+    const last = this.titleClickTimes[2]!;
+    if (last - first > 600 || this.auth.witchLockout()) {
+      return;
+    }
+    this.triggerWitchModal.emit();
+    this.titleClickTimes = [];
   }
 
   private spawnStars(): void {

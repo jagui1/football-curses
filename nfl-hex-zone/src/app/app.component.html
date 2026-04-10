@@ -1,7 +1,29 @@
+@if (auth.witchModeActive()) {
+  <div class="witch-mode-banner" role="status">
+    🧙‍♀️ Witch Mode Active — Your power is absolute
+  </div>
+}
+@if (toast.message()) {
+  <div class="app-toast" role="status">{{ toast.message() }}</div>
+}
 <main class="app-shell">
-  <app-header />
+  <app-header (triggerWitchModal)="onTriggerWitchModal()" />
   <app-curse-form (hexCast)="onHexCast()" />
-  <app-hex-board />
+  <app-hex-board (requestClearAll)="onRequestClearAll()" />
+  <app-cursed-archives />
   <app-witch-verdict-feed />
   <app-hex-overlay [visible]="overlayVisible()" />
 </main>
+<app-skull-sweep-overlay [visible]="skullVisible()" />
+@if (witchModalOpen()) {
+  <app-witch-password-modal
+    (dismissed)="onWitchModalDismissed()"
+    (authenticated)="onWitchAuthenticated()"
+  />
+}
+@if (adminModalOpen()) {
+  <app-admin-password-modal
+    (dismissed)="onAdminModalDismissed()"
+    (burnConfirmed)="onAdminBurnConfirmed()"
+  />
+}

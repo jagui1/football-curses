@@ -3,10 +3,17 @@
   @if (verdictCurses().length === 0) {
     <p class="feed-empty">The cauldron is warming... patience, mortal.</p>
   } @else {
-    <div class="feed-grid">
+    <ul class="feed-timeline" role="list">
       @for (c of verdictCurses(); track c.id) {
-        <app-curse-card [curse]="c" variant="feed" />
+        <li class="feed-timeline__item">
+          <span class="feed-timeline__rail" aria-hidden="true">
+            <span class="feed-timeline__dot"></span>
+          </span>
+          <div class="feed-timeline__card">
+            <app-curse-card [curse]="c" variant="feed" />
+          </div>
+        </li>
       }
-    </div>
+    </ul>
   }
 </section>

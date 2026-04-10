@@ -1,0 +1,50 @@
+.skull-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 960;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.skull-overlay__inner {
+  animation: skullSweep 1s ease-in-out 1 forwards;
+}
+
+.skull-overlay__emoji {
+  font-size: clamp(4rem, 18vw, 10rem);
+  line-height: 1;
+  filter: drop-shadow(0 0 24px rgba(239, 68, 68, 0.55));
+  display: inline-block;
+}
+
+@keyframes skullSweep {
+  0% {
+    transform: translateX(-120vw) rotate(-12deg) scale(0.6);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  55% {
+    transform: translateX(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(120vw) rotate(12deg) scale(0.7);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skull-overlay__inner {
+    animation: none !important;
+  }
+
+  .skull-overlay__emoji {
+    transform: none;
+    opacity: 0.9;
+  }
+}

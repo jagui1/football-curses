@@ -1,10 +1,12 @@
 .curse-card {
+  position: relative;
   display: flex;
   gap: 0.75rem;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.75rem;
   background: var(--card);
+  overflow: hidden;
 }
 
 @keyframes curseCardEntrance {
@@ -149,4 +151,122 @@
 
 .verdict--rejected {
   color: var(--red);
+}
+
+.curse-card__sparkle {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  font-size: 1.75rem;
+  letter-spacing: 0.35rem;
+  animation: verdictSparkle 1s ease-out 1;
+  text-shadow: 0 0 12px var(--yellow);
+}
+
+.curse-card__reject-burst {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  font-size: 3rem;
+  animation: verdictRejectBurst 0.5s ease-out 1;
+}
+
+@keyframes verdictSparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes verdictRejectBurst {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+    filter: blur(2px);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+.curse-card--sparkle {
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.35);
+}
+
+.curse-card--reject-flash {
+  animation: verdictRejectRing 0.5s ease-out 1;
+}
+
+@keyframes verdictRejectRing {
+  0%,
+  100% {
+    box-shadow: 0 0 0 transparent;
+  }
+  40% {
+    box-shadow: 0 0 28px var(--red);
+  }
+}
+
+.curse-card--feed-glow-pending {
+  box-shadow: 0 0 18px color-mix(in srgb, var(--yellow) 45%, transparent);
+}
+
+.verdict-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+}
+
+.verdict-btn {
+  font-family: var(--font-accent);
+  font-size: 0.82rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.verdict-btn--cast {
+  border-color: color-mix(in srgb, var(--green) 55%, var(--border));
+}
+
+.verdict-btn--pending {
+  border-color: color-mix(in srgb, var(--yellow) 55%, var(--border));
+}
+
+.verdict-btn--reject {
+  border-color: color-mix(in srgb, var(--red) 55%, var(--border));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curse-card__sparkle,
+  .curse-card__reject-burst {
+    animation: none !important;
+    opacity: 0.85;
+  }
+
+  .curse-card--reject-flash {
+    animation: none !important;
+  }
 }

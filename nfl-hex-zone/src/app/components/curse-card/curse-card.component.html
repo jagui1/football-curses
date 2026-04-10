@@ -3,7 +3,16 @@
   [class.curse-card--entrance]="playEntrance"
   [class.curse-card--feed-pulse-cast]="variant === 'feed' && curse.verdict === 'cast'"
   [class.curse-card--feed-pulse-rejected]="variant === 'feed' && curse.verdict === 'rejected'"
+  [class.curse-card--feed-glow-pending]="variant === 'feed' && curse.verdict === 'pending'"
+  [class.curse-card--sparkle]="sparkleActive()"
+  [class.curse-card--reject-flash]="rejectFlashActive()"
 >
+  @if (sparkleActive()) {
+    <div class="curse-card__sparkle" aria-hidden="true">✨✨✨</div>
+  }
+  @if (rejectFlashActive()) {
+    <div class="curse-card__reject-burst" aria-hidden="true">💥</div>
+  }
   <div class="media">
     <img
       class="logo"
@@ -63,6 +72,28 @@
       <div class="verdict verdict--rejected" aria-label="Rejected verdict">
         <span aria-hidden="true">❌</span>
         <span>Rejected</span>
+      </div>
+    }
+
+    @if (showWitchVerdictControls()) {
+      <div class="verdict-actions" role="group" aria-label="Witch verdict controls">
+        <button type="button" class="verdict-btn verdict-btn--cast" (click)="onVerdictClick('cast')">
+          ✅ Cast It
+        </button>
+        <button
+          type="button"
+          class="verdict-btn verdict-btn--pending"
+          (click)="onVerdictClick('pending')"
+        >
+          🕯️ Pending
+        </button>
+        <button
+          type="button"
+          class="verdict-btn verdict-btn--reject"
+          (click)="onVerdictClick('rejected')"
+        >
+          ❌ Reject
+        </button>
       </div>
     }
   </div>

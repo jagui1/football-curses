@@ -19,6 +19,15 @@ describe('HexBoardComponent', () => {
     expect(text).toContain('No hexes cast yet');
   });
 
+  it('should emit requestClearAll when clear button is clicked', () => {
+    const spy = jasmine.createSpy('requestClearAll');
+    fixture.componentInstance.requestClearAll.subscribe(spy);
+    (
+      fixture.nativeElement.querySelector('.clear-stub') as HTMLButtonElement
+    ).click();
+    expect(spy).toHaveBeenCalled();
+  });
+
   it('should list curses from store', () => {
     const store = TestBed.inject(CurseStoreService);
     store.add({

@@ -40,3 +40,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Auth — generated at build time; never commit real hashes from production secrets
+.env
+src/app/auth/password-hashes.ts

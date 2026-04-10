@@ -1,7 +1,13 @@
 <section class="hex-board">
   <header class="hex-board__head">
     <h2 class="hex-board__title">The Hex Board</h2>
-    <button type="button" class="clear-stub" (click)="clearStub()">
+    <button
+      type="button"
+      class="clear-stub"
+      [class.clear-stub--disabled]="auth.adminLockout()"
+      [disabled]="auth.adminLockout()"
+      (click)="onClearAllClick()"
+    >
       🗑️ Clear All Hexes
     </button>
   </header>

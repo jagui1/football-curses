@@ -7,7 +7,9 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
 import { CurseIntensity, CurseRecord } from '../../models/curse-record.model';
+import { CurseStoreService } from '../../services/curse-store.service';
 import { RosterService } from '../../services/roster.service';
 
 @Component({
@@ -20,11 +22,15 @@ export class CurseCardComponent implements OnChanges {
   @Input({ required: true }) curse!: CurseRecord;
   /** Hex Board: animate only the card just submitted this session. */
   @Input() playEntrance = false;
-  /** `feed` enables Witch's Verdict pulse styles (Phase 3 / 4). */
-  @Input() variant: 'board' | 'feed' = 'board';
+  /** `feed` enables Witch's Verdict pulse styles; `archive` is read-only (no verdict buttons). */
+  @Input() variant: 'board' | 'feed' | 'archive' = 'board';
 
   private readonly roster = inject(RosterService);
+  protected readonly auth = inject(AuthService);
+  private readonly curseStore = inject(CurseStoreService);
   protected readonly showHeadshot = signal(true);
+  protected readonly sparkleActive = signal(false);
+  protected readonly rejectFlashActive = signal(false);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['curse']) {
@@ -77,6 +83,24 @@ export class CurseCardComponent implements OnChanges {
         return 'Full Hex';
       case 'ETERNAL_DAMNATION':
         return 'Eternal Damnation';
+    }
+  }
+
+  protected showWitchVerdictControls(): boolean {
+    return (
+      this.variant === 'board' &&
+      this.auth.witchModeActive()
+    );
+  }
+
+  protected onVerdictClick(verdict: 'pending' | 'cast' | 'rejected'): void {
+    this.curseStore.updateVerdict(this.curse.id, verdict);
+    if (verdict === 'cast') {
+      this.sparkleActive.set(true);
+      setTimeout(() => this.sparkleActive.set(false), 1000);
+    } else if (verdict === 'rejected') {
+      this.rejectFlashActive.set(true);
+      setTimeout(() => this.rejectFlashActive.set(false), 500);
     }
   }
 }

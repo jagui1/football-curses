@@ -49,4 +49,11 @@ describe('SeasonService', () => {
   it('getWeekLabel should return Week N for regular season', () => {
     expect(service.getWeekLabel(5)).toBe('Week 5');
   });
+
+  it('getWeekDateRangeLabel should span 7 days from week start', () => {
+    const label = service.getWeekDateRangeLabel(1);
+    expect(label).toContain('Sep 4');
+    expect(label).toContain('Sep 10');
+    expect(label).toContain('–');
+  });
 });

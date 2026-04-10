@@ -1,0 +1,68 @@
+<section
+  class="cursed-archives"
+  aria-labelledby="cursed-archives-title"
+>
+  <h2 id="cursed-archives-title" class="cursed-archives__title">
+    📅 The Cursed Archives
+  </h2>
+
+  @if (pillWeeks().length > 0) {
+    <div class="cursed-archives__pills" role="tablist" aria-label="Jump to NFL week">
+      @for (w of pillWeeks(); track w) {
+        <button
+          type="button"
+          class="week-pill"
+          [class.week-pill--active]="pillIsActive(w)"
+          role="tab"
+          [attr.aria-selected]="pillIsActive(w)"
+          (click)="selectPill(w)"
+        >
+          Week {{ w }}
+        </button>
+      }
+    </div>
+  }
+
+  @if (buckets().length === 0) {
+    <p class="cursed-archives__empty">No curses archived yet.</p>
+  } @else {
+    <ul class="cursed-archives__list" role="list">
+      @for (b of buckets(); track b.week) {
+        <li
+          class="bucket"
+          [id]="'archive-bucket-' + b.week"
+        >
+          <button
+            type="button"
+            class="bucket__header"
+            [attr.aria-expanded]="isExpanded(b.week)"
+            (click)="toggleBucket(b.week)"
+          >
+            <span class="bucket__head-top">
+              <span class="bucket__title">{{ weekLabel(b.week) }}</span>
+              <span class="bucket__chev" aria-hidden="true">{{
+                isExpanded(b.week) ? '▾' : '▸'
+              }}</span>
+            </span>
+            <span class="bucket__head-sub">
+              <span class="bucket__range">{{ weekRange(b.week) }}</span>
+              <span class="bucket__count">{{ b.curses.length }}</span>
+            </span>
+          </button>
+          <div
+            class="bucket__panel"
+            [class.bucket__panel--open]="isExpanded(b.week)"
+          >
+            <div class="bucket__inner">
+              <div class="bucket__grid">
+                @for (c of b.curses; track c.id) {
+                  <app-curse-card [curse]="c" variant="archive" />
+                }
+              </div>
+            </div>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</section>

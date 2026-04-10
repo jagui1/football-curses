@@ -39,5 +39,6 @@ describe('WitchVerdictFeedComponent', () => {
     });
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('app-curse-card')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.feed-timeline')).toBeTruthy();
   });
 });

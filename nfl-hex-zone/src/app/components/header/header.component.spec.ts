@@ -29,6 +29,25 @@ describe('HeaderComponent', () => {
     expect(emojis.length).toBeLessThanOrEqual(20);
   });
 
+  it('should emit triggerWitchModal on three quick title clicks', () => {
+    const spy = jasmine.createSpy('trigger');
+    fixture.componentInstance.triggerWitchModal.subscribe(spy);
+    const title = fixture.nativeElement.querySelector('.title') as HTMLElement;
+    title.dispatchEvent(new MouseEvent('click'));
+    title.dispatchEvent(new MouseEvent('click'));
+    title.dispatchEvent(new MouseEvent('click'));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not emit triggerWitchModal on only two title clicks', () => {
+    const spy = jasmine.createSpy('trigger');
+    fixture.componentInstance.triggerWitchModal.subscribe(spy);
+    const title = fixture.nativeElement.querySelector('.title') as HTMLElement;
+    title.dispatchEvent(new MouseEvent('click'));
+    title.dispatchEvent(new MouseEvent('click'));
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('should increment when a curse is added', () => {
     const store = TestBed.inject(CurseStoreService);
     store.add({

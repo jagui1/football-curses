@@ -1,0 +1,41 @@
+# Deploy NFL Hex Zone to GitHub Pages. Requires repository secrets:
+# WITCH_PASSWORD, ADMIN_PASSWORD (never log or echo these values).
+name: Deploy NFL Hex Zone to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: nfl-hex-zone
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: nfl-hex-zone/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate password hashes
+        run: node scripts/hash-passwords.mjs
+        env:
+          WITCH_PASSWORD: ${{ secrets.WITCH_PASSWORD }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+
+      - name: Production build
+        run: npx ng build --configuration production --base-href /nfl-hex-zone/
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: nfl-hex-zone/dist/nfl-hex-zone/browser
