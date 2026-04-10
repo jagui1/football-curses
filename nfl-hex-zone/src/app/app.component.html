@@ -1,0 +1,7 @@
+<main class="app-shell">
+  <app-header />
+  <app-curse-form (hexCast)="onHexCast()" />
+  <app-hex-board />
+  <app-witch-verdict-feed />
+  <app-hex-overlay [visible]="overlayVisible()" />
+</main>

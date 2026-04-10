@@ -1,0 +1,21 @@
+<section class="hex-board">
+  <header class="hex-board__head">
+    <h2 class="hex-board__title">The Hex Board</h2>
+    <button type="button" class="clear-stub" (click)="clearStub()">
+      🗑️ Clear All Hexes
+    </button>
+  </header>
+
+  @if (store.curses().length === 0) {
+    <p class="empty">No hexes cast yet. The board is disturbingly clean.</p>
+  }
+
+  <div class="grid">
+    @for (c of store.curses(); track c.id) {
+      <app-curse-card
+        [curse]="c"
+        [playEntrance]="c.id === store.lastAddedCurseId()"
+      />
+    }
+  </div>
+</section>

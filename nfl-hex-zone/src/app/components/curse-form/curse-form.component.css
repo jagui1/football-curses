@@ -1,0 +1,153 @@
+@keyframes cauldronPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 18px var(--glow);
+  }
+  50% {
+    box-shadow: 0 0 34px var(--glow);
+  }
+}
+
+.curse-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  background: var(--card);
+  box-shadow: 0 0 24px var(--glow);
+  animation: cauldronPulse 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curse-form {
+    animation: none !important;
+    box-shadow: 0 0 24px var(--glow) !important;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field .label {
+  font-family: var(--font-accent);
+  font-size: 0.95rem;
+}
+
+label,
+.field > .label {
+  color: var(--text);
+}
+
+input[type='text'],
+input[type='number'],
+textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.counter {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.counter--bad {
+  color: var(--red);
+}
+
+.error {
+  color: var(--red);
+  font-size: 0.85rem;
+}
+
+.intensity {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.intensity legend {
+  font-family: var(--font-accent);
+  margin-bottom: 0.5rem;
+}
+
+.intensity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.5rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.intensity-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-start;
+  padding: 0.6rem 0.65rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 0.12s ease;
+}
+
+.intensity-card:hover,
+.intensity-card:focus-within {
+  animation: wiggle 0.45s ease 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intensity-card:hover,
+  .intensity-card:focus-within {
+    animation: none !important;
+  }
+}
+
+.intensity-card:has(input:checked) {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.submit {
+  margin-top: 0.25rem;
+  align-self: flex-start;
+  font-family: var(--font-accent);
+  font-size: 1.05rem;
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--accent);
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  color: var(--text);
+  cursor: pointer;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
+}

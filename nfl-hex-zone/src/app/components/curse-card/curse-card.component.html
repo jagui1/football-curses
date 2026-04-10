@@ -1,0 +1,69 @@
+<article
+  class="curse-card"
+  [class.curse-card--entrance]="playEntrance"
+  [class.curse-card--feed-pulse-cast]="variant === 'feed' && curse.verdict === 'cast'"
+  [class.curse-card--feed-pulse-rejected]="variant === 'feed' && curse.verdict === 'rejected'"
+>
+  <div class="media">
+    <img
+      class="logo"
+      [src]="teamLogoUrl()"
+      [alt]="'Team logo for ' + curse.team"
+    />
+    <div class="headshot-wrap">
+      @if (showHeadshot()) {
+        <img
+          class="headshot"
+          [src]="headshotUrl()"
+          [alt]="'Headshot of ' + curse.playerName"
+          (error)="onHeadshotError()"
+        />
+      } @else {
+        <span class="headshot-fallback" role="img" [attr.aria-label]="'Stand-in for ' + curse.playerName">
+          {{ fallbackEmoji() }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <div class="body">
+    <h3 class="player-line">
+      {{ curse.playerName }}
+      @if (playerPosition()) {
+        <span class="pos">({{ playerPosition() }})</span>
+      }
+    </h3>
+    <p class="team-line">{{ curse.team }}</p>
+    <p class="submitter">From: {{ curse.submitterName }}</p>
+    <p class="reason">{{ curse.reason }}</p>
+    <p class="intensity">
+      <span class="intensity-label">{{ intensityLabel(curse.intensity) }}</span>
+    </p>
+    <p class="flavor">{{ curse.curseFlavor }}</p>
+    <p class="meta">
+      <span class="week">Week {{ curse.nflWeek }}</span>
+      <span class="time">{{ curse.timestamp | date: 'medium' }}</span>
+    </p>
+    @if (curse.verdictTimestamp) {
+      <p class="verdict-time">Verdict: {{ curse.verdictTimestamp | date: 'medium' }}</p>
+    }
+    <p class="id-line" aria-label="Curse id">ID: {{ curse.id }}</p>
+
+    @if (curse.verdict === 'pending') {
+      <div class="verdict verdict--pending" aria-label="Pending verdict">
+        <span aria-hidden="true">🕯️</span>
+        <span>Pending</span>
+      </div>
+    } @else if (curse.verdict === 'cast') {
+      <div class="verdict verdict--cast" aria-label="Cast verdict">
+        <span aria-hidden="true">✅</span>
+        <span>Cast</span>
+      </div>
+    } @else if (curse.verdict === 'rejected') {
+      <div class="verdict verdict--rejected" aria-label="Rejected verdict">
+        <span aria-hidden="true">❌</span>
+        <span>Rejected</span>
+      </div>
+    }
+  </div>
+</article>

@@ -1,0 +1,152 @@
+.curse-card {
+  display: flex;
+  gap: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem;
+  background: var(--card);
+}
+
+@keyframes curseCardEntrance {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+    box-shadow: 0 0 0 transparent;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+    box-shadow: 0 0 20px var(--glow);
+  }
+}
+
+.curse-card--entrance {
+  animation: curseCardEntrance 0.4s ease-out forwards;
+}
+
+.curse-card--feed-pulse-cast {
+  animation: castPulse 1.2s ease-out 1;
+}
+
+.curse-card--feed-pulse-rejected {
+  animation: rejectedPulse 1.2s ease-out 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curse-card--entrance {
+    animation: none !important;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.media {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.headshot-wrap {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+}
+
+.headshot {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.headshot-fallback {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.player-line {
+  margin: 0;
+  font-family: var(--font-accent);
+  font-size: 1.05rem;
+}
+
+.pos {
+  color: var(--muted);
+  font-weight: normal;
+}
+
+.team-line,
+.submitter,
+.reason,
+.flavor,
+.meta,
+.verdict-time,
+.id-line {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+.team-line {
+  color: var(--muted);
+}
+
+.reason {
+  white-space: pre-wrap;
+}
+
+.flavor {
+  font-style: italic;
+  color: var(--yellow);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.id-line {
+  font-size: 0.65rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+  font-family: var(--font-accent);
+  font-size: 0.95rem;
+}
+
+.verdict--pending {
+  color: var(--yellow);
+}
+
+.verdict--cast {
+  color: var(--green);
+}
+
+.verdict--rejected {
+  color: var(--red);
+}

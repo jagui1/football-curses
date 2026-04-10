@@ -1,0 +1,12 @@
+<section class="witch-verdict-feed" aria-labelledby="witch-feed-title">
+  <h2 id="witch-feed-title" class="feed-title">🔮 The Witch Has Spoken</h2>
+  @if (verdictCurses().length === 0) {
+    <p class="feed-empty">The cauldron is warming... patience, mortal.</p>
+  } @else {
+    <div class="feed-grid">
+      @for (c of verdictCurses(); track c.id) {
+        <app-curse-card [curse]="c" variant="feed" />
+      }
+    </div>
+  }
+</section>

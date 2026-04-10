@@ -1,0 +1,105 @@
+<form class="curse-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="submitterName">Your name</label>
+    <input
+      id="submitterName"
+      type="text"
+      formControlName="submitterName"
+      placeholder="Your witch name"
+      autocomplete="nickname"
+    />
+    @if (form.get('submitterName')?.touched && form.get('submitterName')?.errors?.['required']) {
+      <span class="error" role="alert">Name is required.</span>
+    }
+  </div>
+
+  <div class="field">
+    <span class="label" id="team-label">Team</span>
+    <app-image-select
+      formControlName="team"
+      [options]="teamOptions"
+      placeholder="Select a team"
+      labelledBy="team-label"
+    />
+    @if (form.get('team')?.touched && form.get('team')?.errors?.['required']) {
+      <span class="error" role="alert">Pick a team.</span>
+    }
+  </div>
+
+  <div class="field">
+    <span class="label" id="player-label">Player</span>
+    <app-image-select
+      formControlName="player"
+      [options]="playerOptions"
+      placeholder="Pick a team first 🧙"
+    />
+    @if (form.get('player')?.touched && form.get('player')?.errors?.['required']) {
+      <span class="error" role="alert">Pick a player.</span>
+    }
+  </div>
+
+  <div class="field">
+    <label for="reason">Why do they deserve it?</label>
+    <textarea
+      id="reason"
+      formControlName="reason"
+      rows="4"
+      placeholder="He dropped a wide-open pass and I lost $20"
+    ></textarea>
+    <div class="counter" [class.counter--bad]="reasonLength() > 280">
+      {{ reasonLength() }} / 280
+    </div>
+    @if (form.get('reason')?.touched && form.get('reason')?.errors?.['required']) {
+      <span class="error" role="alert">Give a reason.</span>
+    }
+    @if (form.get('reason')?.touched && form.get('reason')?.errors?.['maxlength']) {
+      <span class="error" role="alert">Keep it to 280 characters.</span>
+    }
+  </div>
+
+  <fieldset class="intensity">
+    <legend>Curse intensity</legend>
+    <div class="intensity-grid">
+      <label class="intensity-card">
+        <input
+          type="radio"
+          formControlName="intensity"
+          value="MILD_JINX"
+          class="sr-only"
+        />
+        <span aria-hidden="true">🌶️</span>
+        <span>Mild Jinx</span>
+      </label>
+      <label class="intensity-card">
+        <input
+          type="radio"
+          formControlName="intensity"
+          value="FULL_HEX"
+          class="sr-only"
+        />
+        <span aria-hidden="true">🔥</span>
+        <span>Full Hex</span>
+      </label>
+      <label class="intensity-card">
+        <input
+          type="radio"
+          formControlName="intensity"
+          value="ETERNAL_DAMNATION"
+          class="sr-only"
+        />
+        <span aria-hidden="true">☠️</span>
+        <span>ETERNAL DAMNATION</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <div class="field">
+    <label for="nflWeek">NFL week</label>
+    <input id="nflWeek" type="number" formControlName="nflWeek" min="1" max="22" />
+    @if (form.get('nflWeek')?.touched && form.get('nflWeek')?.invalid) {
+      <span class="error" role="alert">Enter a week from 1 to 22.</span>
+    }
+  </div>
+
+  <button type="submit" class="submit">Cast the Hex 🔮</button>
+</form>

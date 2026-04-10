@@ -1,0 +1,21 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 10, 15, 0.72);
+  pointer-events: auto;
+}
+
+.orb {
+  font-size: 5rem;
+  line-height: 1;
+  animation: spinPop 1.5s ease-in-out 1 both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none !important;
+  }
+}

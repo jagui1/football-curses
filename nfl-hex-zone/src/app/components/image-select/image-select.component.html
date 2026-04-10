@@ -1,0 +1,54 @@
+<div class="image-select">
+  <button
+    type="button"
+    class="trigger"
+    role="combobox"
+    [attr.aria-labelledby]="labelledBy || null"
+    [attr.aria-expanded]="open()"
+    [attr.aria-controls]="open() ? listboxId : null"
+    [disabled]="isDisabled()"
+    (click)="toggle($event)"
+    (keydown)="onTriggerKeydown($event)"
+  >
+    @if (selected(); as sel) {
+      <span class="thumb" aria-hidden="true">
+        @if (sel.imageUrl) {
+          <img [src]="sel.imageUrl" [alt]="'Thumbnail for ' + sel.label" />
+        }
+      </span>
+      <span class="label">{{ sel.label }}</span>
+    } @else {
+      <span class="thumb thumb--empty" aria-hidden="true"></span>
+      <span class="label label--placeholder">{{ placeholder }}</span>
+    }
+  </button>
+
+  @if (open()) {
+    <div
+      #panelRef
+      class="panel"
+      role="listbox"
+      [id]="listboxId"
+      (keydown)="onPanelKeydown($event)"
+      tabindex="-1"
+    >
+      @for (opt of options; track opt.value; let i = $index) {
+        <button
+          type="button"
+          class="option"
+          role="option"
+          [attr.aria-selected]="selected()?.value === opt.value"
+          [class.option--active]="i === activeIndex()"
+          (click)="select(opt, $event)"
+        >
+          <span class="thumb" aria-hidden="true">
+            @if (opt.imageUrl) {
+              <img [src]="opt.imageUrl" [alt]="opt.label" />
+            }
+          </span>
+          <span class="label">{{ opt.label }}</span>
+        </button>
+      }
+    </div>
+  }
+</div>

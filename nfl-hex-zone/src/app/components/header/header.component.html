@@ -1,0 +1,14 @@
+<div class="header-backdrop" aria-hidden="true">
+  <div #starHost class="header-backdrop__stars"></div>
+  <div #emojiHost class="header-backdrop__emojis"></div>
+</div>
+
+<header class="site-header">
+  <div class="title-row">
+    <h1 class="title">THE NFL HEX ZONE</h1>
+    <span class="curse-count" aria-live="polite" aria-atomic="true">
+      Hexes: {{ store.curses().length }}
+    </span>
+  </div>
+  <p class="tagline">Where fumbles are ordained.</p>
+</header>
